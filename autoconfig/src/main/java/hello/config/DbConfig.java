@@ -1,0 +1,41 @@
+package hello.config;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.JdbcTransactionManager;
+import org.springframework.transaction.TransactionManager;
+
+import com.zaxxer.hikari.HikariDataSource;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Configuration
+@Slf4j
+public class DbConfig {
+
+	@Bean
+	public DataSource dataSource() {
+		log.info("datasource bean 등록");
+		HikariDataSource dataSource = new HikariDataSource();
+		dataSource.setDriverClassName("org.h2.Driver");
+		dataSource.setJdbcUrl("jdbc:h2:mem:test");
+		dataSource.setUsername("sa");
+		dataSource.setPassword("");
+		return dataSource;
+	}
+
+	@Bean
+	public TransactionManager transactionManager() {
+		log.info("transactionManager bean 등록");
+		return new JdbcTransactionManager(dataSource());
+	}
+
+	@Bean
+	public JdbcTemplate jdbcTemplate() {
+		log.info("jdbcTemplate 등록");
+		return new JdbcTemplate(dataSource());
+	}
+}
