@@ -25,11 +25,23 @@ public class MyDataSourceValueConfig {
     @Value("${my.datasource.etc.options}")
     private List<String> options;
 
+    {
+
+    }
+
     @Bean
     public MyDataSource myDataSource1() {
         return new MyDataSource(url, username, password, maxConnection, timeout, options);
     }
+    )
 
-
-
-}
+    @Bean
+    public MyDataSource myDataSource2(
+            @Value("${my.datasource.url}") String url,
+            @Value("${my.datasource.username}") String username,
+            @Value("${my.datasource.password}") String password,
+            @Value("${my.datasource.etc.max-connection}") int maxConnection,
+            @Value("${my.datasource.etc.timeout}") Duration timeout,
+            @Value("${my.datasource.etc.options}") List<String> options) {
+        return new MyDataSource(url, username, password, maxConnection, timeout, options);
+    }
