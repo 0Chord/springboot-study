@@ -33,7 +33,7 @@ public class MyDataSourceValueConfig {
     public MyDataSource myDataSource1() {
         return new MyDataSource(url, username, password, maxConnection, timeout, options);
     }
-    )
+
 
     @Bean
     public MyDataSource myDataSource2(
@@ -45,3 +45,4 @@ public class MyDataSourceValueConfig {
             @Value("${my.datasource.etc.options}") List<String> options) {
         return new MyDataSource(url, username, password, maxConnection, timeout, options);
     }
+}
